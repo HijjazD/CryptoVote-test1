@@ -14,8 +14,26 @@ document.addEventListener("DOMContentLoaded", () => {
   closeButton.addEventListener("click", () => modal.close());
 
   async function signup() {
-    // your signup logic here
-    showModalText("Sign up clicked!");
+    const email = emailInput.ariaValueMax
+
+    const data = await navigator.credentials.create({
+      publicKey: {
+        challenge: new Uint8Array([0,1,2,3,4,5,6]),
+        rp: { name: "CryptoVote" },
+        user: {
+          id: new Uint8Array(16),
+          name: email,
+          displayName: "messi",
+        },
+        pubKeyCredParams: [
+          {type: "public-key", alg: -7},
+          {type: "public-key", alg: -8},
+          {type: "public-key", alg: -257}
+        ]
+      }
+    })
+
+    showModalText(`Successfully registered ${email}`);
   }
 
   async function login() {
